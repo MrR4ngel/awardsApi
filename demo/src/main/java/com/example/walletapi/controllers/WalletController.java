@@ -91,7 +91,7 @@ public class WalletController {
     }
 
     private String getTokenDetails(String tokenId) {
-        String commandOutput = executeCommand("velluscinum showToken http://localhost:9984 " + tokenId); //NÃO ESQUECER DA DESGRAÇA DAS ASPAS NO tokenId
+        String commandOutput = executeCommand("velluscinum showToken http://localhost:9984 " + tokenId);
     
         // Verificar se há dados válidos no retorno
         if (commandOutput == null || commandOutput.isEmpty()) {
