@@ -1,0 +1,98 @@
+openapi: 3.0.1
+info:
+  title: Wallet API
+  description: API para gerenciamento de premiações, carteiras digitais e deploy de NFTs.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080
+paths:
+
+  /api/v1/generate:
+    post:
+      summary: Gera arquivos de premiações
+      description: Gera arquivos de premiação digital baseados no tipo informado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [GOLDEN, SILVER, BRONZE, HONOR]
+                  example: GOLDEN
+      responses:
+        '200':
+          description: Premiação gerada com sucesso.
+        '400':
+          description: Tipo de premiação inválido ou não informado.
+
+  /api/v1/deploy:
+    post:
+      summary: Realiza deploy das premiações NFT
+      description: Realiza o deploy das premiações digitais em formato NFT.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [GOLDEN, SILVER, BRONZE, HONOR]
+                  example: GOLDEN
+      responses:
+        '200':
+          description: Deploy realizado com sucesso.
+        '400':
+          description: Tipo de premiação inválido ou não informado.
+
+  /api/v1/wallet/query:
+    post:
+      summary: Consulta informações da carteira
+      description: Realiza diferentes consultas na carteira, como saldo e detalhes de tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [walletBalance, showToken, showToken1]
+                  example: walletBalance
+                idPerson:
+                  type: integer
+                  example: 1001
+                tokenId:
+                  type: string
+                  example: "123abc"
+      responses:
+        '200':
+          description: Consulta realizada com sucesso.
+        '400':
+          description: Dados inválidos ou insuficientes.
+
+  /api/v1/wallet/generate:
+    post:
+      summary: Geração e armazenamento de carteiras digitais
+      description: Gera ou armazena carteiras digitais para usuários premiados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operation:
+                  type: string
+                  enum: [generate, store]
+                  example: generate
+      responses:
+        '200':
+          description: Operação concluída com sucesso.
+        '400':
+          description: Operação inválida ou não informada.

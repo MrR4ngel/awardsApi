@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: API Awards
+  description: API para gerenciamento de premiações digitais e carteiras em blockchain.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081/api/v1
+    description: Servidor local
+
+paths:
+  /wallet/generate:
+    post:
+      summary: Cria ou armazena carteiras para usuários premiados
+      description: Define se a operação será para geração ou armazenamento de carteiras.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operation:
+                  type: string
+                  enum: ["generate", "store"]
+                  description: Define se a carteira será gerada ou armazenada no banco.
+      responses:
+        "200":
+          description: Operação realizada com sucesso
+        "400":
+          description: Requisição inválida
+
+  /wallet/query:
+    post:
+      summary: Realiza consultas na carteira digital
+      description: Permite consultar saldo, visualizar tokens e imagens de NFTs.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: ["walletBalance", "showToken"]
+                  description: Tipo de consulta a ser realizada.
+                idPerson:
+                  type: integer
+                  description: ID do usuário (necessário para saldo).
+                tokenId:
+                  type: string
+                  description: ID do token a ser consultado.
+      responses:
+        "200":
+          description: Retorna os dados da consulta
+        "400":
+          description: Requisição inválida
+
+  /showToken1/{tokenId}:
+    get:
+      summary: Retorna a imagem de um NFT
+      description: Endpoint para visualizar a imagem do ativo digital via navegador.
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do token do NFT.
+      responses:
+        "200":
+          description: Retorna a imagem do NFT
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Token não encontrado
+
+  /deploy:
+    post:
+      summary: Realiza o deploy de premiações NFT
+      description: Envia ativos digitais para a blockchain.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: ["GOLDEN", "SILVER", "BRONZE", "HONORABLE MENTION"]
+                  description: Tipo de premiação NFT.
+      responses:
+        "200":
+          description: Deploy realizado com sucesso
+        "400":
+          description: Tipo de premiação inválido
+
+  /generate:
+    post:
+      summary: Gera arquivos de premiação
+      description: Cria arquivos de premiação NFT para os usuários.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: ["GOLDEN", "SILVER", "BRONZE", "HONORABLE MENTION"]
+                  description: Tipo de premiação NFT.
+      responses:
+        "200":
+          description: Geração concluída
+        "400":
+          description: Requisição inválida
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Mensagem de erro
+          

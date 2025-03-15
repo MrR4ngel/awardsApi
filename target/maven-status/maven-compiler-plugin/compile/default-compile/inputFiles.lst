@@ -1,0 +1,5 @@
+/home/bigchaindb/wallet-api/src/main/java/com/example/walletapi/controllers/WalletController.java
+/home/bigchaindb/wallet-api/src/main/java/com/example/walletapi/models/KeyEntity.java
+/home/bigchaindb/wallet-api/src/main/java/com/example/walletapi/WalletApiApplication.java
+/home/bigchaindb/wallet-api/src/main/java/com/example/walletapi/repositories/KeyRepository.java
+/home/bigchaindb/wallet-api/src/main/java/com/example/walletapi/services/WalletService.java
